@@ -1,0 +1,10 @@
+Package: msg 
+Version: 0.1
+Author: David Lawrence Miller <dave@ninepointeightone.net>
+Maintainer: David Lawrence Miller <dave@ninepointeightone.net>
+Title: Multidimensional Scaling for Generalized additive models 
+Description: Implements reliable finite area smoothing for mgcv as well as generalized distance smoothing.
+Depends: R (>= 2.11.0), mgcv, soap, MASS
+LazyLoad: yes
+License: GPL (>= 2)
+
