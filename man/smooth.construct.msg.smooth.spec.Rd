@@ -1,5 +1,6 @@
 \name{smooth.construct.msg.smooth.spec}
 \alias{Predict.matrix.msg.spline}
+\alias{msg}
 %- Also NEED an `\alias' for EACH other topic documented here.
 \title{Multidimensional Scaling for Generalized additive models - msg}
 
