@@ -25,7 +25,7 @@ woodpath<-function(xpoints,ypoints,bnd,start=NA,faster=0,debug=0){
 
    # load the library
    #dyn.load("wood.so")
-   library.dynam("mdspack",package=c("mdspack"))
+   library.dynam("msg",package=c("msg"))
 
    ## code for running everything at once...
    wood_ret<-.C("wood_path",len=as.integer(len),start=as.integer(start), 
@@ -69,7 +69,7 @@ woodpath<-function(xpoints,ypoints,bnd,start=NA,faster=0,debug=0){
       extraslash<-""
    }
 
-   library.dynam.unload("mdspack",paste(.libPaths()[1],extraslash,"mdspack",sep=""))
+   library.dynam.unload("msg",paste(.libPaths()[1],extraslash,"msg",sep=""))
 
    return(D)
 }
