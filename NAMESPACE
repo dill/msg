@@ -1,0 +1,5 @@
+export(inSide)
+import(mgcv)
+S3method(Predict.matrix,msg.smooth)
+S3method(smooth.construct,msg.smooth.spec)
+useDynLib(msg)
