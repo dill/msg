@@ -25,7 +25,7 @@ woodpath<-function(xpoints,ypoints,bnd,start=NA,faster=0,debug=0){
 
    # load the library
    #dyn.load("wood.so")
-   library.dynam("msg",package=c("msg"))
+   #library.dynam("msg",package=c("msg"))
 
    ## code for running everything at once...
    wood_ret<-.C("wood_path",len=as.integer(len),start=as.integer(start), 
@@ -42,7 +42,7 @@ woodpath<-function(xpoints,ypoints,bnd,start=NA,faster=0,debug=0){
                 ystart=as.double(ref.grid$y[1]),
                 pathlen=as.double(rep(0,pl)),
                 faster=as.integer(faster),
-                debug=as.integer(debug))
+                debug=as.integer(debug),PACKAGE="msg")
 
    # full MDS
    if(!insert){
@@ -62,14 +62,14 @@ woodpath<-function(xpoints,ypoints,bnd,start=NA,faster=0,debug=0){
       D<-t(D)
    }
 
-   # unload the library
-   if(R.version$os=="darwin9.8.0"){
-      extraslash<-"/"
-   }else{
-      extraslash<-""
-   }
+   ## unload the library
+   #if(R.version$os=="darwin9.8.0"){
+   #   extraslash<-"/"
+   #}else{
+   #   extraslash<-""
+   #}
 
-   library.dynam.unload("msg",paste(.libPaths()[1],extraslash,"msg",sep=""))
+   #library.dynam.unload("msg",paste(.libPaths()[1],extraslash,"msg",sep=""))
 
    return(D)
 }
