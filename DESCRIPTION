@@ -23,3 +23,6 @@ Collate:
     'mds-wrap.R'
     'smooth.construct.msg.smooth.spec.R'
     'zzz.R'
+    'choose.mds.dim.R'
+    'gam.mds.fit.R'
+    'gam.mds.R'

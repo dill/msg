@@ -1,3 +1,4 @@
+export(gam.mds)
 export(inSide)
 import(mgcv)
 S3method(Predict.matrix,msg.smooth)
