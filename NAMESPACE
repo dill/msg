@@ -1,6 +1,8 @@
 export(gam.mds)
 export(inSide)
 import(mgcv)
+S3method(Predict.matrix,dm.smooth)
 S3method(Predict.matrix,msg.smooth)
+S3method(smooth.construct,dm.smooth.spec)
 S3method(smooth.construct,msg.smooth.spec)
 useDynLib(msg)
