@@ -61,7 +61,7 @@
 \examples{
 ### Not run
 # test this works with the wt2 example from msg
-# load some data
+library(msg)
 data(wt2)
 
 # create the sample
@@ -71,11 +71,9 @@ wt2.samp <- list(x=wt2$data$x[samp.ind],
                 z=wt2$data$z[samp.ind]+rnorm(250)*0.9)
 mds.dim<-5
 # get the distance matrix
-grid.obj <- msg:::create_refgrid(wt2$bnd,50)
+grid.obj <- msg:::create_refgrid(wt2$bnd,120)
 
 D.grid <- msg:::create_distance_matrix(grid.obj$x,grid.obj$y,wt2$bnd,faster=0)
-
-#D.grid<-grid.obj$D
 
 grid.mds<-cmdscale(D.grid,eig=TRUE,k=mds.dim,x.ret=TRUE)
 mds.data<-as.data.frame(msg:::insert.mds.generic(grid.mds,wt2.samp,grid.obj,
@@ -83,30 +81,11 @@ mds.data<-as.data.frame(msg:::insert.mds.generic(grid.mds,wt2.samp,grid.obj,
 D<-dist(mds.data)
 
 # fit the model
-b<-gam(z~s(x,y,bs="dm",k=200,xt=list(D=D,mds.dim=5)),data=wt2.samp)
+b.dm<-gam(z~s(x,y,bs="dm",k=200,xt=list(D=D,mds.dim=5)),data=wt2.samp)
 
-# predict
-pred.grid<-data.frame(expand.grid(x=seq(min(wt2$data$x),max(wt2$data$x),len=50),
-                                  y=seq(min(wt2$data$y),max(wt2$data$y),len=50)))
-ind<-inSide(wt2$bnd,pred.grid$x,pred.grid$y)
-pred.grid<-pred.grid[ind,]
-pred.mat<-matrix(NA,50,50)
-pred.mat[ind]<-predict(b,pred.grid)
 
-# plot what happened
-par(mfrow=c(2,2))
-true.mat<-wt2$true.matrix
-
-image(true.mat,main="Truth",xlab="x",ylab="y",col=heat.colors(1000))
-contour(true.mat,add=TRUE,labcex=0.3,lwd=0.5)
-image(pred.mat,main="Fitted model",xlab="x",ylab="y",col=heat.colors(1000))
-contour(pred.mat,add=TRUE,labcex=0.3,lwd=0.5)
-
-plot(b$smooth[[1]]$msg$grid,pch=19,cex=0.3,
-     main="Starting grid",xlab="x",ylab="y")
-
-plot(b$smooth[[1]]$msg$mds.obj$points,pch=19,cex=0.3,
-     main="Starting grid\\n(MDS space)",xlab="x",ylab="y")
+# with msg
+b.msg<-gam(z~s(x,y,bs="msg",k=200,xt=list(bnd=wt2$bnd,mds.dim=5)),data=wt2.samp)
 }
 \author{
   David L. Miller
