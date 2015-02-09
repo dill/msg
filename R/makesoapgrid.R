@@ -17,15 +17,17 @@ make_soap_grid<-function(bnd,n.grid,mat=FALSE,log=FALSE,delta=FALSE){
 
    # create the grid
    xm <- seq(xmin,xmax,length=m)
-   yn<-seq(ymin,ymax,length=n)
-   xx <- rep(xm,n)
-   yy<-rep(yn,rep(m,n))
+   yn <- seq(ymin,ymax,length=n)
+   x <- rep(xm,n)
+   y <- rep(yn,rep(m,n))
 
-   onoff<-inSide(bnd,xx,yy)
-   xx<-xx[onoff]
-   yy<-yy[onoff]
+   bnd <- list(x=bnd$x, y=bnd$y, n=length(bnd$x))
 
-   ret<-list(x=xx,y=yy)
+   onoff <- inSide(bnd,x,y)
+   x <- x[onoff]
+   y <- y[onoff]
+
+   ret <- list(x=x, y=y)
 
    # if we want an image plot, return a matrix
    if(mat){
@@ -33,7 +35,7 @@ make_soap_grid<-function(bnd,n.grid,mat=FALSE,log=FALSE,delta=FALSE){
      mat[onoff]<-0
      ret$mat<-mat
    }
-   
+
    # return the logical for the grid
    if(log){
       ret$log<-onoff
@@ -46,6 +48,4 @@ make_soap_grid<-function(bnd,n.grid,mat=FALSE,log=FALSE,delta=FALSE){
    }
 
    return(ret)
-
 }
-

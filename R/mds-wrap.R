@@ -1,4 +1,5 @@
 # wrapper function for C code
+#' @useDynLib msg wood_path
 woodpath<-function(xpoints,ypoints,bnd,start=NA,faster=0,debug=0){
 
    # put everything in the right format
