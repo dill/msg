@@ -1,19 +1,15 @@
-print.msg.version <- function()
-{ library(help=msg)$info[[1]] -> version
-  version <- version[pmatch("Version",version)]
-  um <- strsplit(version," ")[[1]]
-  version <- um[nchar(um)>0][2]
-  cat(paste("This is msg",version,"\n"))
+.onAttach<-function(...){
+  # uses packageStartupMessage which can then be
+  # surpressed
+
+  version <- utils::packageVersion("msg")
+  built <- utils::packageDescription("msg",fields="Built")
+
+  hello <- paste("This is msg ",version,"\nBuilt: ",built,sep="")
+  packageStartupMessage(hello)
 }
 
-.onAttach <- function(...) {
-  print.msg.version()
-}
+#.onLoad <- function(lib,pkg){
+#  library.dynam("msg", pkg, lib)
+#}
 
-.onLoad <- function(lib,pkg){
-  library.dynam("msg", pkg, lib)
-}
-
-.First.lib <- function(lib, pkg) {
-  print.msg.version()
-}
