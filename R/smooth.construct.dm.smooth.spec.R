@@ -44,8 +44,7 @@
 #' @author David L. Miller
 #'
 #' @examples
-#' ### Not run
-#'
+#' \dontrun{
 #' # test this works with the wt2 example from msg
 #' library(msg)
 #' data(wt2)
@@ -57,25 +56,24 @@
 #'                 y=wt2$data$y[samp.ind],
 #'                 z=wt2$data$z[samp.ind]+rnorm(250)*0.9)
 #' mds.dim<-5
-#' # get the distance matrix
-#' grid.obj <- msg:::create_refgrid(wt2$bnd,120)
-#' D.grid <- msg:::create_distance_matrix(grid.obj$x,grid.obj$y,wt2$bnd,faster=0)
-#' grid.mds<-cmdscale(D.grid,eig=TRUE,k=mds.dim,x.ret=TRUE)
-#' mds.data<-as.data.frame(msg:::insert.mds.generic(grid.mds,wt2.samp,grid.obj,
-#'                                                  bnd=wt2$bnd))
-#' D<-dist(mds.data)
+#' custom_dist_fn <- function(x){
+#'   msg:::create_distance_matrix(x$x,x$y,wt2$bnd,faster=0)
+#' }
 #'
-#' # fit the model
-#' b.dm<-gam(z~s(x,y,bs="dm",k=200,xt=list(D=D,mds.dim=5)),data=wt2.samp)
+#' grid_obj <- msg:::create_refgrid(wt2$bnd,120)
 #'
-#' ## do the same thing but using a distance function
-#' b.dm<-gam(z~s(x,y,bs="dm",k=200,xt=list(mds.dim=5, dist_fn=dist, grid=grid.obj)),data=wt2.samp)
+#' grid_obj$nrefx <- grid_obj$nrefy <- NULL
+#' grid_obj <- as.data.frame(grid_obj)
 #'
-#' # predict
-#' pp <- predict(b.dm, newdata=wt2.samp)
+#'
+#' b.dm <- gam(z~s(x, y, bs="dm", k=200,
+#'                 xt=list(dist_fn=custom_dist_fn, mds.dim=5, grid=grid_obj)),
+#'             data=wt2.samp)
+#'
 #'
 #' # with msg
 #' b.msg<-gam(z~s(x,y,bs="msg",k=200,xt=list(bnd=wt2$bnd,mds.dim=5)),data=wt2.samp)
+#' }
 #' @keywords models smoothing
 smooth.construct.dm.smooth.spec <- function(object, data, knots){
 
