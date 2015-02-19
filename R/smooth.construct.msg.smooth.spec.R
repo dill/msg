@@ -86,7 +86,8 @@
 #' # predict
 #' pred.grid<-data.frame(expand.grid(x=seq(min(wt2$data$x),max(wt2$data$x),len=50),
 #'                                   y=seq(min(wt2$data$y),max(wt2$data$y),len=50)))
-#' ind<-inSide(wt2$bnd,pred.grid$x,pred.grid$y)
+#' x <- pred.grid$x; y <- pred.grid$y
+#' ind<-inSide(wt2$bnd,x,y)
 #' pred.grid<-pred.grid[ind,]
 #' pred.mat<-matrix(NA,50,50)
 #' pred.mat[ind]<-predict(b,pred.grid)
